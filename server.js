@@ -1,11 +1,12 @@
 // Dependencies
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 
 // configuration
 require('dotenv').config()
-console.log(preocess.env.PORT);
+console.log(process.env.PORT);
 console.log(process.env.MONGO_URI);
 const PORT = process.env.PORT
 const app = express()
@@ -23,5 +24,21 @@ app.use(cors())
 
 // Routes
 app.get('/', (req,res)=>{
-    res.send('this is my books api!!!')
+    res.send('This is my books api!!!')
+})
+
+
+// BOOKS
+const booksController = require('./controllers/books_controller.js')
+app.use('/books', booksController)
+
+// 404 PAGE
+app.get('*', (req, res) => {
+    res.send('<h1>404 Page<h1>')
+})
+
+
+
+app.listen(process.env.PORT, () => {
+    console.log('Port', PORT , 'is alive')
 })
